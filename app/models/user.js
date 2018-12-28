@@ -9,6 +9,7 @@ const formatMoney = (attrName) => {
     get() {
       let fieldInCents = get(this, attrName);
       if (isPresent(fieldInCents)) {
+        //console.log(fieldInCents / 100);
         return fieldInCents / 100;
       }
     },
