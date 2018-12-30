@@ -101,7 +101,8 @@ module('Integration | Component | user-card', function(hooks) {
    
      stubbedService('card-selector', {
       setCurrentSelection(type, id) {
-       
+        this._type = type;
+        this._id = id;       
       },
     
       clearSelection() {
@@ -116,6 +117,7 @@ module('Integration | Component | user-card', function(hooks) {
     //this.owner.register('service:card-selector', stubbedService);
 
     await render(hbs`{{user-card user=user}}`);
+    assert.equal(this.get('user').id, 1);
 
     assert.ok(this.element.querySelector('.user-content'), 'user information is shown');
   
@@ -129,7 +131,8 @@ module('Integration | Component | user-card', function(hooks) {
    
     stubbedService('card-selector', {
      setCurrentSelection(type, id) {
-      
+      this._type = type;
+      this._id = id;
      },
    
      clearSelection() {
@@ -162,8 +165,10 @@ module('Integration | Component | user-card', function(hooks) {
     });
 
     stubbedService('card-selector', {
-      setCurrentSelection(type, id) {
-        assert.notOk(true, 'setCurrentSelection should not be called');       
+      setCurrentSelection(type='user', id=1) {
+        assert.notOk(true, 'setCurrentSelection should not be called');
+        this._type = type;
+        this._id = id;
       },
     
       clearSelection() {
@@ -172,6 +177,7 @@ module('Integration | Component | user-card', function(hooks) {
     
       getCurrentSelection() {
         return 'user-1';
+        //return `${this._type}-${this._id}`;
       }
     });
 
